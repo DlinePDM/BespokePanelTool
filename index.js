@@ -17,33 +17,6 @@ loader.load('models/example.glb', function(glb){
     console.log('an error occured')
 })
 
-const loader2 = new GLTFLoader()
-loader2.load('models/example.glb', function(glb){
-    console.log(glb)
-    const root = glb.scene;
-    root.scale.set(0.005,0.005,0.005)
-    root.position.set(0,-2.25,0)
-    scene.add(root);
-}, function(xhr){
-    console.log((xhr.loaded/xhr.total*100)+"% loaded")
-}, function(error){
-    console.log('an error occured')
-})
-
-const loader3 = new GLTFLoader()
-loader3.load('models/example.glb', function(glb){
-    console.log(glb)
-    const root = glb.scene;
-    root.scale.set(0.005,0.005,0.005)
-    root.position.set(0,-4.5,0)
-    scene.add(root);
-}, function(xhr){
-    console.log((xhr.loaded/xhr.total*100)+"% loaded")
-}, function(error){
-    console.log('an error occured')
-})
-
-
 const light = new THREE.DirectionalLight(0xffffff, 1);
 light.position.set(2,2,2)
 scene.add(light)
