@@ -18,8 +18,8 @@
                  function AddDropDownList() {
                      //Build an array containing products.
                     var products = [
-                         { ProductId: 1, Name: "empty"},
-                         { ProductId: 2, Name: "example"},
+                         { ProductId: 1, Name: "empty", Size: "0"},
+                         { ProductId: 2, Name: "example", Size: "2.25"},
                      ];
                      //Create a DropDownList element.
                      var ddlProducts = $("<select />");
@@ -33,6 +33,9 @@
       
                          //Set ProductId in Value part.
                          option.val(this.ProductId);
+
+                         //Set ProductId in Value part.
+                         option.val(this.Size);
       
                          //Add the Option element to DropDownList.
                          ddlProducts.append(option);
@@ -46,16 +49,18 @@
                      div.append(ddlProducts);
       
                      //Create a Remove Button.
-                     var btnRemove = $("<input type = 'button' value = 'Remove' />");
+                     var btnRemove = $("<input type = 'button' value = 'X' />");
                      btnRemove.click(function () {
                          $(this).parent().remove();
                      });
-      
+
+     
                      //Add the Remove Buttton to DIV.
                      div.append(btnRemove);
       
                      //Add the DIV to the container DIV.
                      dvContainer.append(div);
+                    console.log($("<select />"))
                  };
              </script>
             <canvas class="webgl" width="100" height="100"></canvas>
