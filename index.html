@@ -21,6 +21,8 @@
                 var i = 0;
                 var ind = 0;
                 var arr = [];
+                var idb = 0;
+                var ids = 0;
                  function AddDropDownList() {
                      //Build an array containing products.
                     var products = [
@@ -32,12 +34,13 @@
                      arr.push( {ind: i, ProductId: "0", Name: "empty", Size: "0", File: "models/empty.glb"});
                      console.log(i);
                      console.log(arr);
+
                      //Create a DropDownList element.
 
-                     var ddlProducts = $("<select />").attr("id", i);
+                     var ddlProducts = $("<select />").attr("ids", i);
                      ddlProducts.change(function(){
                          console.log("i've been changed");
-                         var numb2 = parseInt($(this).attr("id"));
+                         var numb2 = parseInt($(this).attr("ids"));
                          console.log(numb2)
                          console.log($(this).val());
                          var optindex = parseInt($(this).val())
@@ -48,15 +51,12 @@
                          arr[arrayindex].File = products[optindex].File
                         console.log(arr);
                      })
-      
                      //Add the Options to the DropDownList.
                      $(products).each(function () {
                         var option = $("<option />");
       
                          //Set Product Name in Text part.
                          option.html(this.Name);
-      
-
 
                          //Set ProductId in Value part.
                          option.val(this.Size);
@@ -67,7 +67,6 @@
                          //Add the Option element to DropDownList.
                          ddlProducts.append(option);
                      });
-                     
                      //Reference the container DIV.
                      var dvContainer = $("#dvContainer")
       
@@ -83,26 +82,28 @@
                         }
                         return -1;
                      }
-     
+
                      //Create a Remove Button.
-                     var btnRemove = $("<input type = 'button' value = 'X' />").attr("id", i);
+                     var btnRemove = $("<input type = 'button' value = 'X' />").attr("idb", i);
+                    
                      btnRemove.click(function () {
                          $(this).parent().remove();
-                         console.log($(this).attr("id"));
-                         var numb = parseInt($(this).attr("id"));
-                         console.log(findWithAttr(arr, "ind", numb));
+                         console.log($(this).attr("idb"));
+                         var numb = parseInt($(this).attr("idb"));
+                         console.log("bitch",findWithAttr(arr, "ind", numb));
+                         console.log("bitch",numb);
                          arr.splice(findWithAttr(arr, "ind", numb),1);
                          console.log(arr);
-                         
+ 
                      });
 
-     
+
                      //Add the Remove Buttton to DIV.
                      div.append(btnRemove);
       
                      //Add the DIV to the container DIV.
                      dvContainer.append(div);
-
+                     return i;
                  };
 
              </script>
