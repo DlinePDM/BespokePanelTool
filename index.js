@@ -1,7 +1,7 @@
 import * as THREE from 'https://unpkg.com/three@0.127.0/build/three.module.js'
-import {GLTFLoader} from 'https://unpkg.com/three@0.126.0/examples/jsm/loaders/GLTFLoader.js'
-import {OrbitControls} from 'https://unpkg.com/three@0.126.0/examples/jsm/controls/OrbitControls.js'
-import {GLTFExporter} from 'https://unpkg.com/three@0.126.0/examples/jsm/exporters/GLTFExporter.js'
+import {GLTFLoader} from 'https://unpkg.com/three@0.127.0/examples/jsm/loaders/GLTFLoader.js'
+import {OrbitControls} from 'https://unpkg.com/three@0.127.0/examples/jsm/controls/OrbitControls.js'
+import {GLTFExporter} from 'https://unpkg.com/three@0.127.0/examples/jsm/exporters/GLTFExporter.js'
 
 const canvas = document.querySelector('.webgl')
 const scene = new THREE.Scene()
@@ -47,19 +47,55 @@ function count2(){
  }
 
 function bang() {
-    var loader = new GLTFLoader();
-    while(scene.children.length > 0){ 
-        scene.remove(scene.children[0]); 
+
+    function delscene(){
+        while(scene.children.length > 0){ 
+            scene.remove(scene.children[0]); 
+        }
     }
+    delscene()
     let h = 0
     let hh = 0
     var b = arr.length;
+    var pp = {};
+    
+    var ard = {};
+    var arl = {};
     for (let a = 0; a < b; a++) {
+        var loader= new GLTFLoader();
         var z = arr[a]
-        var n = z["Height"]
+        var n = arr[a].File
+        var m = arr[0].Height
+        var ng = parseFloat(m)
+        arl[a]=loader
         h = arr[a].Height
         hh = hh + parseFloat(h)
-        console.log('nana '+hh)
+        var pos = 0;
+        pos = pos + ng - m
+
+        console.log('nana '+ n)
+        console.log(loader)
+
+        arl[a].load(n, function(glb){
+            console.log(glb)
+            var str = glb.scene;
+            var scena = "Scene" + a.toString()
+            ard[a]=str
+            ard[a].name = scena;
+            ard[a].scale.set(0.005,0.005,0.005);
+            
+            ard[a].position.set(0, pos, 0);
+            scene.add(ard[a]);
+            console.log(ard)
+            }) 
+            //function(xhr){
+            //    console.log((xhr.loaded/xhr.total*100)+"% loaded")
+            //}, function(error){
+            //    console.log('an error occured');
+        
+        //}
+        //)
+
         //let sModelName = "resources/" + oResource.model3D + ".gltf";
         //loader.load( sModeName, function (gltf) {
             // the same code as in your original post
@@ -67,16 +103,50 @@ function bang() {
         //    console.error(error);
         //})
     }
-    loader.load('models/example.glb', function(glb){
-        console.log(glb)
-        const root = glb.scene;
-        root.scale.set(0.005,0.005,0.005)
-        scene.add(root);
-        }, function(xhr){
-            console.log((xhr.loaded/xhr.total*100)+"% loaded")
-        }, function(error){
-            console.log('an error occured');
+        const light = new THREE.DirectionalLight(0xffffff, 1);
+        light.position.set(2,2,2)
+        scene.add(light)
+        
+        const sizes ={
+            width: window.innerWidth,
+            height: window.innerHeight
+        }
+        const camera = new THREE.PerspectiveCamera(75, sizes.width/sizes.height, 0.1, 100)
+
+        camera.position.set(0.75,0.75,0.75); // Set position like this
+        scene.add(camera)
+
+        const renderer = new THREE.WebGL1Renderer({
+        canvas: canvas
     })
+    const controls = new OrbitControls( camera, renderer.domElement );
+
+    renderer.setClearColor( 0xffffff );
+    renderer.setSize(sizes.width, sizes.height)
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio,2))
+    renderer.shadowMap.enabled = true
+    renderer.gammaOutput = true
+
+    function animate(){
+        requestAnimationFrame(animate);
+        controls.update();
+        renderer.render(scene,camera);
+    }
+
+    animate()
+    
+
+}
+    //loader.load('models/example.glb', function(glb){
+    //    console.log(glb)
+    //    const root = glb.scene;
+    //    root.scale.set(0.005,0.005,0.005)
+    //    scene.add(root);
+    //    }, function(xhr){
+    //        console.log((xhr.loaded/xhr.total*100)+"% loaded")
+    //    }, function(error){
+    //        console.log('an error occured');
+    //})
     
     const btn = document.getElementById('btnDWN')
     btn.addEventListener('click', download)
@@ -107,39 +177,5 @@ function bang() {
         link.click()
     }
     
-    const light = new THREE.DirectionalLight(0xffffff, 1);
-    light.position.set(2,2,2)
-    scene.add(light)
-    
-    const sizes ={
-        width: window.innerWidth,
-        height: window.innerHeight
-    }
-    
-    
-    
-    const camera = new THREE.PerspectiveCamera(75, sizes.width/sizes.height, 0.1, 100)
-    
-    camera.position.set(0.75,0.75,2); // Set position like this
-    scene.add(camera)
-    
-    const renderer = new THREE.WebGL1Renderer({
-        canvas: canvas
-    })
-    const controls = new OrbitControls( camera, renderer.domElement );
-    
-    renderer.setClearColor( 0xffffff );
-    renderer.setSize(sizes.width, sizes.height)
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio,2))
-    renderer.shadowMap.enabled = true
-    renderer.gammaOutput = true
-    
-    function animate(){
-        requestAnimationFrame(animate);
-        controls.update();
-        renderer.render(scene,camera);
-    }
-    
-    animate();
-}
+
 
