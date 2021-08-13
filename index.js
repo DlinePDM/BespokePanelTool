@@ -5,12 +5,14 @@ import {GLTFExporter} from 'https://unpkg.com/three@0.127.0/examples/jsm/exporte
 
 const canvas = document.querySelector('.webgl')
 const scene = new THREE.Scene()
+THREE.Cache.enabled = false
 
 var s0 = "[ids="
 var s1 = "[idb="
 var s4 = '"'
 var s5 = '"'
 var s2 = ']'
+
 
 
 const btn2 = document.getElementById('btnAdd')
@@ -50,10 +52,12 @@ function bang() {
 
     function delscene(){
         while(scene.children.length > 0){ 
-            scene.remove(scene.children[0]); 
+            scene.remove(scene.children[0]);
+
         }
+        THREE.Cache.clear() 
     }
-    delscene()
+    //delscene()
     let h = 0
     let hh = 0
     var b = arr.length;
@@ -61,6 +65,7 @@ function bang() {
     
     var ard = {};
     var arl = {};
+    var pos = 0;
     for (let a = 0; a < b; a++) {
         var loader= new GLTFLoader();
         var z = arr[a]
@@ -70,7 +75,7 @@ function bang() {
         arl[a]=loader
         h = arr[a].Height
         hh = hh + parseFloat(h)
-        var pos = 0;
+        
         pos = pos + ng - m
 
         console.log('nana '+ n)
@@ -79,14 +84,17 @@ function bang() {
         arl[a].load(n, function(glb){
             console.log(glb)
             var str = glb.scene;
-            var scena = "Scene" + a.toString()
+
             ard[a]=str
-            ard[a].name = scena;
+
             ard[a].scale.set(0.005,0.005,0.005);
             
-            ard[a].position.set(0, pos, 0);
+            ard[a].position.set(0, -pos, 0);
             scene.add(ard[a]);
+    
             console.log(ard)
+            console.log(pos)
+
             }) 
             //function(xhr){
             //    console.log((xhr.loaded/xhr.total*100)+"% loaded")
@@ -103,6 +111,7 @@ function bang() {
         //    console.error(error);
         //})
     }
+    
         const light = new THREE.DirectionalLight(0xffffff, 1);
         light.position.set(2,2,2)
         scene.add(light)
