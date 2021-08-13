@@ -97,7 +97,7 @@ function bang() {
             console.log(pos)
 
     
-            camera.position.set(1,1, -pos-m*a); // Set position like this
+            camera.position.set((pos-m*a)/2,-(pos-m*a)*2, (pos-m*a)); // Set position like this
 
             }) 
             //function(xhr){
