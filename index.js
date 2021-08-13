@@ -6,6 +6,11 @@ import {GLTFExporter} from 'https://unpkg.com/three@0.127.0/examples/jsm/exporte
 const canvas = document.querySelector('.webgl')
 const scene = new THREE.Scene()
 THREE.Cache.enabled = false
+const sizes ={
+    width: window.innerWidth,
+    height: window.innerHeight
+}
+const camera = new THREE.PerspectiveCamera(75, sizes.width/sizes.height, 0.1, 100)
 
 var s0 = "[ids="
 var s1 = "[idb="
@@ -49,7 +54,7 @@ function count2(){
  }
 
 function bang() {
-
+    var pos = 0.0;
     function delscene(){
         while(scene.children.length > 0){ 
             scene.remove(scene.children[0]);
@@ -65,30 +70,34 @@ function bang() {
     
     var ard = {};
     var arl = {};
-    var pos = 0;
+
     for (let a = 0; a < b; a++) {
-        //var r = new GLTFLoader();
+        var loader = new GLTFLoader();
         var z = arr[a]
         var n = arr[a].File
         var m = arr[0].Height
         var ng = parseFloat(m)
-        arl[a]=new GLTFLoader();
+        //arl[a]=new GLTFLoader();
         h = arr[a].Height
         hh = hh + parseFloat(h)
-        
-        pos = pos + ng - m
+        pos = pos + ng
+        var pos2 = pos2-m
 
         console.log('nana '+ n)
         console.log(arr[a].File)
-        arl[a].load(arr[a].File, function(glb){
+        loader.load(arr[a].File, function(glb){
             console.log(glb)
             var str = glb.scene;
             ard[a]=glb.scene
-            ard[a].scale.set(0.005,0.005,0.005);          
-            ard[a].position.set(0, -pos, 0);
+            ard[a].scale.set(0.005,0.005,0.005); 
+            console.log("pp"+pos)         
+            ard[a].position.set(0, -pos-m*a, 0);
             scene.add(ard[a]);
             console.log(ard)
             console.log(pos)
+
+    
+            camera.position.set(1,1, -pos-m*a); // Set position like this
 
             }) 
             //function(xhr){
@@ -111,13 +120,7 @@ function bang() {
         light.position.set(2,2,2)
         scene.add(light)
         
-        const sizes ={
-            width: window.innerWidth,
-            height: window.innerHeight
-        }
-        const camera = new THREE.PerspectiveCamera(75, sizes.width/sizes.height, 0.1, 100)
 
-        camera.position.set(0.75,0.75,0.75); // Set position like this
         scene.add(camera)
 
         const renderer = new THREE.WebGL1Renderer({
