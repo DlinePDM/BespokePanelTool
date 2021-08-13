@@ -57,7 +57,7 @@ function bang() {
         }
         THREE.Cache.clear() 
     }
-    //delscene()
+    delscene()
     let h = 0
     let hh = 0
     var b = arr.length;
@@ -67,31 +67,26 @@ function bang() {
     var arl = {};
     var pos = 0;
     for (let a = 0; a < b; a++) {
-        var loader= new GLTFLoader();
+        //var r = new GLTFLoader();
         var z = arr[a]
         var n = arr[a].File
         var m = arr[0].Height
         var ng = parseFloat(m)
-        arl[a]=loader
+        arl[a]=new GLTFLoader();
         h = arr[a].Height
         hh = hh + parseFloat(h)
         
         pos = pos + ng - m
 
         console.log('nana '+ n)
-        console.log(loader)
-
-        arl[a].load(n, function(glb){
+        console.log(arr[a].File)
+        arl[a].load(arr[a].File, function(glb){
             console.log(glb)
             var str = glb.scene;
-
-            ard[a]=str
-
-            ard[a].scale.set(0.005,0.005,0.005);
-            
+            ard[a]=glb.scene
+            ard[a].scale.set(0.005,0.005,0.005);          
             ard[a].position.set(0, -pos, 0);
             scene.add(ard[a]);
-    
             console.log(ard)
             console.log(pos)
 
