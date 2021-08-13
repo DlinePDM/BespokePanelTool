@@ -6,12 +6,12 @@ import {GLTFExporter} from 'https://unpkg.com/three@0.126.0/examples/jsm/exporte
 const canvas = document.querySelector('.webgl')
 const scene = new THREE.Scene()
 
-var h = 0
 var s0 = "[ids="
 var s1 = "[idb="
 var s4 = '"'
 var s5 = '"'
 var s2 = ']'
+
 
 const btn2 = document.getElementById('btnAdd')
 btn2.addEventListener('click', count)
@@ -32,6 +32,7 @@ function count(){
 
 btn2.addEventListener('click', count2)
 function count2(){
+    
     var s3 = i.toString();
     var etikete = s0.concat(s4);
     console.log(s3)
@@ -46,7 +47,26 @@ function count2(){
  }
 
 function bang() {
-    const loader = new GLTFLoader()
+    var loader = new GLTFLoader();
+    while(scene.children.length > 0){ 
+        scene.remove(scene.children[0]); 
+    }
+    let h = 0
+    let hh = 0
+    var b = arr.length;
+    for (let a = 0; a < b; a++) {
+        var z = arr[a]
+        var n = z["Height"]
+        h = arr[a].Height
+        hh = hh + parseFloat(h)
+        console.log('nana '+hh)
+        //let sModelName = "resources/" + oResource.model3D + ".gltf";
+        //loader.load( sModeName, function (gltf) {
+            // the same code as in your original post
+        //}, undefined, function (error) {
+        //    console.error(error);
+        //})
+    }
     loader.load('models/example.glb', function(glb){
         console.log(glb)
         const root = glb.scene;
