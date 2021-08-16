@@ -65,10 +65,12 @@ function bang() {
             renderer.dispose();
             renderer.renderLists.dispose();
             loader.dispose();
+            controls.dispose()
             THREE.Cache.remove(scene);
             THREE.Cache.remove(loader);
             THREE.Cache.remove(renderer.renderLists);
-            THREE.Cache.remove(renderer)
+            THREE.Cache.remove(renderer);
+            THREE.Cache.remove(controls);
             THREE.Cache.clear();  
             console.log("clear cache");
         }catch{console.log("issue")}
