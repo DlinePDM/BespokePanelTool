@@ -55,12 +55,16 @@ function count2(){
 
 function bang() {
     var pos = 0.0;
+    var ini = []
     function delscene(){
         while(scene.children.length > 0){ 
+            THREE.Cache.remove(scene.children[0]);
             scene.remove(scene.children[0]);
-
+            
         }
-        THREE.Cache.clear() 
+        THREE.Cache.remove(scene);
+        THREE.Cache.clear();  
+        console.log("clear cache");
     }
     delscene()
     let h = 0
@@ -72,34 +76,25 @@ function bang() {
     var arl = {};
 
     for (let a = 0; a < b; a++) {
+        //console.log("arr["+a+"] - ind: " + arr[a].ind + ", ProductId: " +arr[a].ProductId + ", Name: " + arr[a].Name + ", Height: " + arr[a].Height +", File: " + arr[a].File)
         var loader = new GLTFLoader();
-        var z = arr[a]
-        var n = arr[a].File
-        var m = arr[0].Height
-        var ng = parseFloat(m)
-        //arl[a]=new GLTFLoader();
-        h = arr[a].Height
-        hh = hh + parseFloat(h)
-        pos = pos + ng
-        var pos2 = pos2-m
+        let pos0 = parseFloat(arr[0].Height);
+        pos = pos + parseFloat(arr[a].Height);
+        ini.push(pos)
+        console.log("aaa pos: " + pos + " pos0: " + pos0 + " in: " + ini[a]);
 
-        console.log('nana '+ n)
-        console.log(arr[a].File)
         loader.load(arr[a].File, function(glb){
-            console.log(glb)
+            console.log(glb);
             var str = glb.scene;
-            ard[a]=glb.scene
+            ard[a]=glb.scene;
             ard[a].scale.set(0.005,0.005,0.005); 
-            console.log("pp"+pos)         
-            ard[a].position.set(0, -pos-m*a, 0);
+            console.log("pos: " + ini[a] + " pos0: " + pos0);
+            ard[a].position.set(0, - ini[a], 0);
             scene.add(ard[a]);
-            console.log(ard)
-            console.log(pos)
+            console.log(ard);
 
-    
-            camera.position.set((pos-m*a)/2,-(pos-m*a)*2, (pos-m*a)); // Set position like this
+        })
 
-            }) 
             //function(xhr){
             //    console.log((xhr.loaded/xhr.total*100)+"% loaded")
             //}, function(error){
@@ -115,7 +110,7 @@ function bang() {
         //    console.error(error);
         //})
     }
-    
+
         const light = new THREE.DirectionalLight(0xffffff, 1);
         light.position.set(2,2,2)
         scene.add(light)
@@ -126,6 +121,7 @@ function bang() {
         const renderer = new THREE.WebGL1Renderer({
         canvas: canvas
     })
+
     const controls = new OrbitControls( camera, renderer.domElement );
 
     renderer.setClearColor( 0xffffff );
@@ -141,9 +137,11 @@ function bang() {
     }
 
     animate()
+
     
 
 }
+camera.position.set(1,0,0);
     //loader.load('models/example.glb', function(glb){
     //    console.log(glb)
     //    const root = glb.scene;
