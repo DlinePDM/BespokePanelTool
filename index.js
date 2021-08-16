@@ -3,6 +3,7 @@ import {GLTFLoader} from 'https://unpkg.com/three@0.127.0/examples/jsm/loaders/G
 import {OrbitControls} from 'https://unpkg.com/three@0.127.0/examples/jsm/controls/OrbitControls.js'
 import {GLTFExporter} from 'https://unpkg.com/three@0.127.0/examples/jsm/exporters/GLTFExporter.js'
 
+
 const canvas = document.querySelector('.webgl')
 const scene = new THREE.Scene()
 THREE.Cache.enabled = false
@@ -57,55 +58,56 @@ function bang() {
     var pos = 0.0;
     var ini = []
     function delscene(){
-        while(scene.children.length > 0){ 
-            THREE.Cache.remove(scene.children[0]);
-            scene.remove(scene.children[0]); 
-        }
-        try{
-            renderer.dispose();
-            renderer.renderLists.dispose();
-            loader.dispose();
-            controls.dispose();
-            light.dispose();
-            glb.scene.dispose();
-
-            THREE.Cache.remove(light);
-            THREE.Cache.remove(scene);
-            THREE.Cache.remove(loader);
-            THREE.Cache.remove(renderer.renderLists);
-            THREE.Cache.remove(renderer);
-            THREE.Cache.remove(controls);
-            THREE.Cache.clear();
-            THREE.Cache.clear(WebGL1Renderer);
-            console.log("clear cache");
-        }catch{console.log("issue")}
+        //try{
+            //renderer.dispose();
+            //renderer.renderLists.dispose();
+            //loader.dispose();
+            //controls.dispose();
+            //light.dispose();
+            //glb.scene.dispose();
+            //BufferGeometry.dispose();
+            //THREE.Cache.remove(BufferGeometry);
+            //WebGLRenderTarget.dispose();
+            //THREE.Cache.remove(light);
+            //THREE.Cache.remove(scene);
+            //THREE.Cache.remove(loader);
+            //THREE.Cache.remove(renderer.renderLists);
+            //THREE.Cache.remove(renderer);
+            //THREE.Cache.remove(controls);
+        //    THREE.Cache.clear();
+            //THREE.Cache.clear(WebGL1Renderer);
+        //    console.log("clear cache");
+        //}catch{console.log("issue")}
         scene.traverse(object => {
             if (!object.isMesh) return
             
             console.log('dispose geometry!')
             object.geometry.dispose()
         
-            if (object.material.isMaterial) {
-                cleanMaterial(object.material)
-            } else {
+            //if (object.material.isMaterial) {
+            //    cleanMaterial(object.material)
+            //} else {
                 // an array of materials
-                for (const material of object.material) cleanMaterial(material)
-            }
+            //    for (const material of object.material) cleanMaterial(material)
+            //}
         })
-        const cleanMaterial = material => {
-            console.log('dispose material!')
-            material.dispose()
+        while(scene.children.length > 0){ 
+            THREE.Cache.remove(scene.children[0]);
+            scene.remove(scene.children[0]); 
+        }
+        //const cleanMaterial = material => {
+        //    console.log('dispose material!')
+        //    material.dispose()
         
             // dispose textures
-            for (const key of Object.keys(material)) {
-                const value = material[key]
-                if (value && typeof value === 'object' && 'minFilter' in value) {
-                    console.log('dispose texture!')
-                    value.dispose()
-                }
-            }
-        }
-
+        //    for (const key of Object.keys(material)) {
+        //        const value = material[key]
+        //        if (value && typeof value === 'object' && 'minFilter' in value) {
+        //            console.log('dispose texture!')
+        //            value.dispose()
+        //        }
+        //    }
+        //}
     }
     delscene()
     let h = 0
@@ -182,6 +184,7 @@ function bang() {
     
 
 }
+
 camera.position.set(0,0,1);
     //loader.load('models/example.glb', function(glb){
     //    console.log(glb)
