@@ -59,12 +59,20 @@ function bang() {
     function delscene(){
         while(scene.children.length > 0){ 
             THREE.Cache.remove(scene.children[0]);
-            scene.remove(scene.children[0]);
-            
+            scene.remove(scene.children[0]); 
         }
-        THREE.Cache.remove(scene);
-        THREE.Cache.clear();  
-        console.log("clear cache");
+        try{
+            renderer.dispose();
+            renderer.renderLists.dispose();
+            loader.dispose();
+            THREE.Cache.remove(scene);
+            THREE.Cache.remove(loader);
+            THREE.Cache.remove(renderer.renderLists);
+            THREE.Cache.remove(renderer)
+            THREE.Cache.clear();  
+            console.log("clear cache");
+        }catch{console.log("issue")}
+
     }
     delscene()
     let h = 0
