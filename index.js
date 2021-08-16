@@ -58,56 +58,18 @@ function bang() {
     var pos = 0.0;
     var ini = []
     function delscene(){
-        //try{
-            //renderer.dispose();
-            //renderer.renderLists.dispose();
-            //loader.dispose();
-            //controls.dispose();
-            //light.dispose();
-            //glb.scene.dispose();
-            //BufferGeometry.dispose();
-            //THREE.Cache.remove(BufferGeometry);
-            //WebGLRenderTarget.dispose();
-            //THREE.Cache.remove(light);
-            //THREE.Cache.remove(scene);
-            //THREE.Cache.remove(loader);
-            //THREE.Cache.remove(renderer.renderLists);
-            //THREE.Cache.remove(renderer);
-            //THREE.Cache.remove(controls);
-        //    THREE.Cache.clear();
-            //THREE.Cache.clear(WebGL1Renderer);
-        //    console.log("clear cache");
-        //}catch{console.log("issue")}
         scene.traverse(object => {
             if (!object.isMesh) return
             
             console.log('dispose geometry!')
             object.geometry.dispose()
         
-            //if (object.material.isMaterial) {
-            //    cleanMaterial(object.material)
-            //} else {
-                // an array of materials
-            //    for (const material of object.material) cleanMaterial(material)
-            //}
         })
         while(scene.children.length > 0){ 
             THREE.Cache.remove(scene.children[0]);
             scene.remove(scene.children[0]); 
         }
-        //const cleanMaterial = material => {
-        //    console.log('dispose material!')
-        //    material.dispose()
-        
-            // dispose textures
-        //    for (const key of Object.keys(material)) {
-        //        const value = material[key]
-        //        if (value && typeof value === 'object' && 'minFilter' in value) {
-        //            console.log('dispose texture!')
-        //            value.dispose()
-        //        }
-        //    }
-        //}
+        THREE.Cache.clear();
     }
     delscene()
     let h = 0
