@@ -4,6 +4,7 @@ import {OrbitControls} from 'https://unpkg.com/three@0.127.0/examples/jsm/contro
 import {GLTFExporter} from 'https://unpkg.com/three@0.127.0/examples/jsm/exporters/GLTFExporter.js'
 
 
+
 const canvas = document.querySelector('.webgl')
 const scene = new THREE.Scene()
 THREE.Cache.enabled = false
@@ -100,20 +101,6 @@ function bang() {
 
         })
 
-            //function(xhr){
-            //    console.log((xhr.loaded/xhr.total*100)+"% loaded")
-            //}, function(error){
-            //    console.log('an error occured');
-        
-        //}
-        //)
-
-        //let sModelName = "resources/" + oResource.model3D + ".gltf";
-        //loader.load( sModeName, function (gltf) {
-            // the same code as in your original post
-        //}, undefined, function (error) {
-        //    console.error(error);
-        //})
     }
 
         const light = new THREE.DirectionalLight(0xffffff, 1);
