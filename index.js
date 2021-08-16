@@ -92,7 +92,7 @@ function bang() {
             console.log(glb);
             var str = glb.scene;
             ard[a]=glb.scene;
-            ard[a].scale.set(0.005,0.005,0.005); 
+            ard[a].scale.set(1,1,1); 
             console.log("pos: " + ini[a] + " pos0: " + pos0);
             ard[a].position.set(0, - ini[a], 0);
             scene.add(ard[a]);
