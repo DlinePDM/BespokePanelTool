@@ -85,7 +85,7 @@ function bang() {
         var loader = new GLTFLoader();
         let pos0 = parseFloat(arr[0].Height);
         pos = pos + parseFloat(arr[a].Height);
-        ini.push(pos)
+        ini[a]=pos;
         console.log("aaa pos: " + pos + " pos0: " + pos0 + " in: " + ini[a]);
 
         loader.load(arr[a].File, function(glb){
